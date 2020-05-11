@@ -58,8 +58,6 @@ RSpec.describe "the lockfile format" do
       gem "rack"
     G
 
-    bundle "update --bundler"
-
     lockfile_should_be <<-G
       GEM
         remote: #{file_uri_for(gem_repo1)}/
@@ -233,8 +231,6 @@ RSpec.describe "the lockfile format" do
 
       gem "rack"
     G
-
-    bundle "update --bundler"
 
     expect(err).to include(
       "Warning: the lockfile is being updated to Bundler " \
