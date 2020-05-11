@@ -55,6 +55,7 @@ RSpec.describe "global gem caching" do
         G
 
         simulate_new_machine
+        expect(the_bundle).not_to include_gems "rack 0.9.1"
         expect(source2_global_cache("rack-0.9.1.gem")).to exist
         # rack 0.9.1 is not installed and it is in the global cache
 

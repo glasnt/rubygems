@@ -52,7 +52,7 @@ RSpec.describe "the lockfile format" do
          1.8.2
     L
 
-    install_gemfile <<-G
+    install_gemfile <<-G, :env => { "BUNDLER_VERSION" => Bundler::VERSION }
       source "#{file_uri_for(gem_repo1)}"
 
       gem "rack"
@@ -226,7 +226,7 @@ RSpec.describe "the lockfile format" do
          #{older_major}
     L
 
-    install_gemfile <<-G
+    install_gemfile <<-G, :env => { "BUNDLER_VERSION" => Bundler::VERSION }
       source "#{file_uri_for(gem_repo1)}/"
 
       gem "rack"

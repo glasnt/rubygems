@@ -313,7 +313,8 @@ RSpec.describe "bundle lock" do
          #{Bundler::VERSION}
     G
 
-    simulate_platform(rb) { bundle! :lock }
+    bundle "config force_ruby_platform"
+    bundle! :lock
 
     lockfile_should_be <<-G
       GEM
@@ -330,8 +331,7 @@ RSpec.describe "bundle lock" do
             ffi (>= 1.0.0)
 
       PLATFORMS
-        ruby
-        x86-mingw32
+        #{lockfile_platforms("x86-mingw32")}
 
       DEPENDENCIES
         gssapi

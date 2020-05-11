@@ -377,8 +377,6 @@ RSpec.describe "bundle install with platform conditionals" do
   end
 
   it "resolves all platforms by default and without warning messages" do
-    simulate_platform "ruby"
-
     gemfile <<-G
       source "#{file_uri_for(gem_repo1)}"
 
@@ -396,11 +394,7 @@ RSpec.describe "bundle install with platform conditionals" do
           rack (1.0.0)
 
       PLATFORMS
-        java
-        ruby
-        x64-mingw32
-        x86-mingw32
-        x86-mswin32
+        #{lockfile_platforms("java", "x64-mingw32", "x86-mingw32", "x86-mswin32")}
 
       DEPENDENCIES
         rack
