@@ -468,10 +468,32 @@ module Spec
       old = ENV["BUNDLER_SPEC_WINDOWS"]
       ENV["BUNDLER_SPEC_WINDOWS"] = "true"
       simulate_platform platform do
-        yield
+        simulate_bundler_version_when_missing_prerelease_default_gem_activation do
+          yield
+        end
       end
     ensure
       ENV["BUNDLER_SPEC_WINDOWS"] = old
+    end
+
+    # workaround for missing https://github.com/rubygems/rubygems/commit/929e92d752baad3a08f3ac92eaec162cb96aedd1
+    def simulate_bundler_version_when_missing_prerelease_default_gem_activation
+      return yield unless Gem.rubygems_version < Gem::Version.new("3.1.0.pre.1")
+
+      old = ENV["BUNDLER_VERSION"]
+      ENV["BUNDLER_VERSION"] = Bundler::VERSION
+      yield
+    ensure
+      ENV["BUNDLER_VERSION"] = old
+    end
+
+    # workaround for missing https://github.com/rubygems/rubygems/commit/929e92d752baad3a08f3ac92eaec162cb96aedd1
+    def env_for_missing_prerelease_default_gem_activation
+      if Gem.rubygems_version < Gem::Version.new("3.1.0.pre.1")
+        { "BUNDLER_VERSION" => Bundler::VERSION }
+      else
+        {}
+      end
     end
 
     def revision_for(path)

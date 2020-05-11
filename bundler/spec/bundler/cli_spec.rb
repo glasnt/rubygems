@@ -146,7 +146,7 @@ RSpec.describe "bundle executable" do
       end
     end
 
-    let(:bundler_version) { "1.1" }
+    let(:bundler_version) { "2.0" }
     let(:latest_version) { nil }
     before do
       bundle! "config set --global disable_version_check false"
